@@ -30,8 +30,16 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
                 HttpSession session = req.getSession();
                 session.setAttribute("user", rs.getString("name"));
+                session.setAttribute("role", rs.getString("role"));
+                session.setAttribute("userId", rs.getInt("id"));   // ✅ ADD THIS
 
-                res.sendRedirect("dashboard.jsp");
+                String role = rs.getString("role");
+
+                if(role.equals("admin")) {
+                    res.sendRedirect("adminDashboard.jsp");
+                } else {
+                    res.sendRedirect("dashboard.jsp");
+                }
             } else {
                 res.getWriter().println("Invalid Login!");
             }

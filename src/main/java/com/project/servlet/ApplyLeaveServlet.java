@@ -21,9 +21,7 @@ public class ApplyLeaveServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             String userName = (String) session.getAttribute("user");
-
-            // temporary logic to map user → id
-            int userId = 1; // we will improve later with DB
+            int userId = (int) session.getAttribute("userId"); 
 
             ps.setInt(1, userId);
             ps.setString(2, req.getParameter("type"));

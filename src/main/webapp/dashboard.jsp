@@ -1,12 +1,30 @@
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
+
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<%
+String user = (String) session.getAttribute("user");
+String role = (String) session.getAttribute("role");
+
+if(user == null) {
+    response.sendRedirect("login.jsp");
+}
+%>
 
 <div class="container">
-<h2>Welcome ${user}</h2>
 
+<h2>Welcome <%= user %></h2>
+
+<!-- Navigation -->
 <a href="applyLeave.jsp">Apply Leave</a><br><br>
 <a href="viewLeaves.jsp">View Leaves</a><br><br>
-<a href="manageLeaves.jsp">Manage Leaves</a><br><br>
+
+<% if(role != null && role.equals("admin")) { %>
+    <a href="manageLeaves.jsp">Manage Leaves</a><br><br>
+<% } %>
+
+<hr>
 
 <h3>Leave Analytics</h3>
 
@@ -31,7 +49,27 @@ try {
 }
 %>
 
-<p>Total Leaves: <%= total %></p>
-<p>Approved Leaves: <%= approved %></p>
-<p>Rejected Leaves: <%= rejected %></p>
+<p><b>Total Leaves:</b> <%= total %></p>
+<p><b>Approved Leaves:</b> <%= approved %></p>
+<p><b>Rejected Leaves:</b> <%= rejected %></p>
+
+<!-- Chart -->
+<canvas id="leaveChart" width="400" height="200"></canvas>
+
+<script>
+var ctx = document.getElementById('leaveChart').getContext('2d');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Approved', 'Rejected'],
+        datasets: [{
+            label: 'Leave Status',
+            data: [<%= approved %>, <%= rejected %>],
+            borderWidth: 1
+        }]
+    }
+});
+</script>
+
 </div>
