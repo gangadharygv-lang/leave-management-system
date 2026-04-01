@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="css/style.css">
+
+<div class="container">
 <h2>Apply Leave</h2>
 
 <form action="ApplyLeaveServlet" method="post">
@@ -8,3 +11,4 @@
 
     <button type="submit">Apply</button>
 </form>
+</div>

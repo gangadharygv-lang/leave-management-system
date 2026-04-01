@@ -1,5 +1,7 @@
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
+<link rel="stylesheet" href="css/style.css">
 
+<div class="container">
 <h2>Welcome ${user}</h2>
 
 <a href="applyLeave.jsp">Apply Leave</a><br><br>
@@ -32,3 +34,4 @@ try {
 <p>Total Leaves: <%= total %></p>
 <p>Approved Leaves: <%= approved %></p>
 <p>Rejected Leaves: <%= rejected %></p>
+</div>

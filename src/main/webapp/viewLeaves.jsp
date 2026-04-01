@@ -1,4 +1,7 @@
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
+<link rel="stylesheet" href="css/style.css">
+
+<div class="container">
 
 <h2>Your Leave Requests</h2>
 
@@ -35,3 +38,4 @@ try {
 %>
 
 </table>
+</div>
