@@ -7,6 +7,7 @@ import java.sql.*;
 
 import com.project.util.DBConnection;
 
+
 public class ApplyLeaveServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)

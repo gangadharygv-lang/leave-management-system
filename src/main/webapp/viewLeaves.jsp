@@ -1,3 +1,8 @@
+<%
+if(session.getAttribute("user") == null) {
+    response.sendRedirect("login.jsp");
+}
+%>
 <%@ page import="java.sql.*,com.project.util.DBConnection"%>
 
 <link rel="stylesheet" href="css/style.css">

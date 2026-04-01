@@ -1,3 +1,8 @@
+<%
+if(session.getAttribute("user") == null) {
+    response.sendRedirect("login.jsp");
+}
+%>
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
 
 <link rel="stylesheet" href="css/style.css">
@@ -17,7 +22,14 @@ if(user == null) {
 <h2>Welcome <%= user %></h2>
 
 <!-- Navigation -->
-<a href="applyLeave.jsp">Apply Leave</a><br><br>
+<%
+
+if(role != null && role.equals("user")) {
+%>
+    <a href="applyLeave.jsp">Apply Leave</a><br><br>
+<%
+}
+%><br><br>
 <a href="viewLeaves.jsp">View Leaves</a><br><br>
 
 <% if(role != null && role.equals("admin")) { %>
@@ -71,5 +83,6 @@ new Chart(ctx, {
     }
 });
 </script>
+<a href="LogoutServlet">Logout</a>
 
 </div>

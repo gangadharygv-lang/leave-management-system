@@ -31,9 +31,13 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("user", rs.getString("name"));
                 session.setAttribute("role", rs.getString("role"));
-                session.setAttribute("userId", rs.getInt("id"));   // ✅ ADD THIS
+                session.setAttribute("userId", rs.getInt("id")); 
 
                 String role = rs.getString("role");
+                if(!rs.getString("status").equals("Approved")) {
+                    res.getWriter().println("Wait for admin approval!");
+                    return;
+                }
 
                 if(role.equals("admin")) {
                     res.sendRedirect("adminDashboard.jsp");

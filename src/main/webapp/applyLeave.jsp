@@ -1,3 +1,8 @@
+<%
+if(session.getAttribute("user") == null) {
+    response.sendRedirect("login.jsp");
+}
+%>
 <link rel="stylesheet" href="css/style.css">
 
 <div class="container">
