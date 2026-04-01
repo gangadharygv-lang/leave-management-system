@@ -25,7 +25,7 @@ if(role == null || !role.equals("admin")) {
 <table>
 <tr>
     <th>ID</th>
-    <th>User ID</th>
+    <th>User</th>
     <th>Type</th>
     <th>From</th>
     <th>To</th>
@@ -38,14 +38,24 @@ try {
     Connection con = DBConnection.getConnection();
     Statement st = con.createStatement();
 
-    ResultSet rs = st.executeQuery("SELECT * FROM leaves");
+    ResultSet rs = st.executeQuery(
+        "SELECT l.*, u.name FROM leaves l JOIN users u ON l.user_id = u.id"
+    );
 
     while(rs.next()) {
         String status = rs.getString("status");
 %>
 <tr>
+    <!-- Leave ID -->
     <td><%= rs.getInt("id") %></td>
-    <td><%= rs.getInt("user_id") %></td>
+
+    <!-- Username + ID -->
+    <td>
+        <%= rs.getString("name") %> 
+        (ID: <%= rs.getInt("user_id") %>)
+    </td>
+
+    <!-- Leave Details -->
     <td><%= rs.getString("leave_type") %></td>
     <td><%= rs.getString("from_date") %></td>
     <td><%= rs.getString("to_date") %></td>
@@ -53,11 +63,11 @@ try {
     <!-- 🎨 Colored Status -->
     <td>
     <%
-    if(status.equals("Approved")) {
+    if("Approved".equals(status)) {
     %>
         <span style="color:green;"><%= status %></span>
     <%
-    } else if(status.equals("Rejected")) {
+    } else if("Rejected".equals(status)) {
     %>
         <span style="color:red;"><%= status %></span>
     <%
@@ -69,8 +79,9 @@ try {
     %>
     </td>
 
+    <!-- Actions -->
     <td>
-        <% if(status.equals("Pending")) { %>
+        <% if("Pending".equals(status)) { %>
             <a href="ApproveServlet?id=<%=rs.getInt("id")%>&action=approve">Approve</a> |
             <a href="ApproveServlet?id=<%=rs.getInt("id")%>&action=reject">Reject</a>
         <% } else { %>
