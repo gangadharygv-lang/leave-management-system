@@ -10,7 +10,7 @@
 
 <a href="<%= request.getContextPath() %>/jsp/admin/manageLeaves.jsp">Manage Leaves</a><br><br>
 
-<a href="<%= request.getContextPath() %>/jsp/user/viewLeaves.jsp">View All Leaves</a><br><br>
+<a href="<%= request.getContextPath() %>/jsp/admin/viewAllLeaves.jsp">View All Leaves</a>
 
 <a href="<%= request.getContextPath() %>/jsp/admin/manageUsers.jsp">Manage Users</a><br><br>
 

@@ -16,7 +16,7 @@
         <% if("admin".equals(session.getAttribute("role"))) { %>
             <a href="<%= request.getContextPath() %>/jsp/admin/adminDashboard.jsp" style="color:white; margin-right:15px;">Dashboard</a>
             <a href="<%= request.getContextPath() %>/jsp/admin/manageLeaves.jsp" style="color:white; margin-right:15px;">Manage Leaves</a>
-            <a href="<%= request.getContextPath() %>/jsp/user/viewLeaves.jsp" style="color:white; margin-right:15px;">All Leaves</a>
+            <a href="<%= request.getContextPath() %>/jsp/admin/viewAllLeaves.jsp" style="color:white; margin-right:15px;">All Leaves</a>
             <a href="<%= request.getContextPath() %>/jsp/admin/manageUsers.jsp" style="color:white; margin-right:15px;">Manage Users</a>
         <% } %>
     </div>

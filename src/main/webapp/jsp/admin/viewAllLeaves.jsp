@@ -1,29 +1,18 @@
-<%@ include file="../includes/auth.jsp" %>
-
-<%
-if(!"user".equals(session.getAttribute("role"))) {
-    response.sendRedirect(request.getContextPath() + "/jsp/security/login.jsp");
-    return;
-}
-%>
-
+<%@ include file="../includes/adminAuth.jsp" %>
 <%@ include file="../includes/header.jsp" %>
 
 <%@ page import="java.sql.*,com.project.util.DBConnection"%>
 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 
-<%
-Integer userId = (Integer) session.getAttribute("userId");
-%>
-
 <div class="container">
 
-<h2>My Leave Requests</h2>
+<h2>All Leave Requests</h2>
 
 <table>
 <tr>
     <th>ID</th>
+    <th>User</th>
     <th>Type</th>
     <th>From</th>
     <th>To</th>
@@ -34,20 +23,23 @@ Integer userId = (Integer) session.getAttribute("userId");
 <%
 try {
     Connection con = DBConnection.getConnection();
+    Statement st = con.createStatement();
 
-    PreparedStatement ps = con.prepareStatement(
-        "SELECT * FROM leaves WHERE user_id=?"
+    ResultSet rs = st.executeQuery(
+        "SELECT l.*, u.name FROM leaves l JOIN users u ON l.user_id = u.id"
     );
-
-    ps.setInt(1, userId);
-
-    ResultSet rs = ps.executeQuery();
 
     while(rs.next()) {
         String status = rs.getString("status");
 %>
 <tr>
     <td><%= rs.getInt("id") %></td>
+
+    <td>
+        <%= rs.getString("name") %> 
+        (ID: <%= rs.getInt("user_id") %>)
+    </td>
+
     <td><%= rs.getString("leave_type") %></td>
     <td><%= rs.getString("from_date") %></td>
     <td><%= rs.getString("to_date") %></td>
@@ -82,7 +74,7 @@ try {
 </table>
 
 <br>
-<a href="<%= request.getContextPath() %>/jsp/user/dashboard.jsp">⬅ Back to Dashboard</a>
+<a href="<%= request.getContextPath() %>/jsp/admin/adminDashboard.jsp">⬅ Back to Dashboard</a>
 
 </div>
 
