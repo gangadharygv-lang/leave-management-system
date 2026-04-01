@@ -1,4 +1,8 @@
-<%@ page import="java.sql.*,com.project.util.DBConnection" %>
+<%
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+response.setDateHeader("Expires", 0); // Proxies
+%>
 
 <%
 /* 🔐 Session check */
@@ -15,7 +19,7 @@ if(role == null || !role.equals("admin")) {
     return;
 }
 %>
-
+<%@ page import="java.sql.*,com.project.util.DBConnection" %>
 <link rel="stylesheet" href="css/style.css">
 
 <div class="container">

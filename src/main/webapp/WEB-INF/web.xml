@@ -43,13 +43,23 @@
 		<servlet-name>RegisterServlet</servlet-name>
 		<url-pattern>/RegisterServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
-	    <servlet-name>LogoutServlet</servlet-name>
-	    <servlet-class>com.project.servlet.LogoutServlet</servlet-class>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.project.servlet.LogoutServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    <servlet-name>LogoutServlet</servlet-name>
-	    <url-pattern>/LogoutServlet</url-pattern>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/LogoutServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ApproveUserServlet</servlet-name>
+		<servlet-class>com.project.servlet.ApproveUserServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ApproveUserServlet</servlet-name>
+		<url-pattern>/ApproveUserServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -1,6 +1,18 @@
 <%
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+
 if(session.getAttribute("user") == null) {
     response.sendRedirect("login.jsp");
+    return;
+}
+
+String role = (String) session.getAttribute("role");
+
+if(role == null || !role.equals("admin")) {
+    response.sendRedirect("login.jsp");
+    return;
 }
 %>
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
@@ -10,7 +22,6 @@ if(session.getAttribute("user") == null) {
 
 <%
 String user = (String) session.getAttribute("user");
-String role = (String) session.getAttribute("role");
 
 if(user == null) {
     response.sendRedirect("login.jsp");
@@ -19,7 +30,10 @@ if(user == null) {
 
 <div class="container">
 
-<h2>Welcome <%= user %></h2>
+<h2>Welcome <%= user %></h2><br>
+<a href="LogoutServlet">
+    <button style="background:red; color:white;">Logout</button>
+</a>
 
 <!-- Navigation -->
 <%

@@ -1,8 +1,3 @@
-<%
-if(session.getAttribute("user") == null) {
-    response.sendRedirect("login.jsp");
-}
-%>
 <link rel="stylesheet" href="css/style.css">
 
 <div class="container">
@@ -13,4 +8,6 @@ if(session.getAttribute("user") == null) {
     Password: <input type="password" name="password"><br>
     <button type="submit">Login</button>
 </form>
+
+<a href="register.jsp">Register</a>
 </div>

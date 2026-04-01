@@ -1,6 +1,18 @@
 <%
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+
 if(session.getAttribute("user") == null) {
     response.sendRedirect("login.jsp");
+    return;
+}
+
+String role = (String) session.getAttribute("role");
+
+if(role == null || !role.equals("admin")) {
+    response.sendRedirect("login.jsp");
+    return;
 }
 %>
 <link rel="stylesheet" href="css/style.css">
