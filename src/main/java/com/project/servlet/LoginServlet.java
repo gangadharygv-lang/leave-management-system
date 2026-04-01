@@ -28,24 +28,30 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                HttpSession session = req.getSession();
-                session.setAttribute("user", rs.getString("name"));
-                session.setAttribute("role", rs.getString("role"));
-                session.setAttribute("userId", rs.getInt("id")); 
 
-                String role = rs.getString("role");
-                if(!rs.getString("status").equals("Approved")) {
-                    res.getWriter().println("Wait for admin approval!");
+                // ❌ Check approval first
+                if(!"Approved".equals(rs.getString("status"))) {
+                    res.sendRedirect(req.getContextPath() + "/jsp/security/login.jsp?error=notapproved");
                     return;
                 }
 
-                if(role.equals("admin")) {
-                    res.sendRedirect("adminDashboard.jsp");
+                HttpSession session = req.getSession();
+                session.setAttribute("user", rs.getString("name"));
+                session.setAttribute("role", rs.getString("role"));
+                session.setAttribute("userId", rs.getInt("id"));
+
+                String role = rs.getString("role");
+
+                // ✅ Correct redirects
+                if("admin".equals(role)) {
+                    res.sendRedirect(req.getContextPath() + "/jsp/admin/adminDashboard.jsp");
                 } else {
-                    res.sendRedirect("dashboard.jsp");
+                    res.sendRedirect(req.getContextPath() + "/jsp/user/dashboard.jsp");
                 }
+
             } else {
-                res.getWriter().println("Invalid Login!");
+                // ❌ Invalid login
+                res.sendRedirect(req.getContextPath() + "/jsp/security/login.jsp?error=invalid");
             }
 
         } catch(Exception e) {

@@ -1,25 +1,9 @@
-<%
-response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-response.setDateHeader("Expires", 0); // Proxies
-%>
+<%@ include file="../includes/adminAuth.jsp" %>
+<%@ include file="../includes/header.jsp" %>
 
-<%
-if(session.getAttribute("user") == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-
-String role = (String) session.getAttribute("role");
-
-if(role == null || !role.equals("admin")) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-%>
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 
 <div class="container">
 
@@ -65,7 +49,7 @@ try {
 
     <td>
         <% if("Pending".equals(status)) { %>
-            <a href="ApproveUserServlet?id=<%=rs.getInt("id")%>">Approve</a>
+            <a href="<%= request.getContextPath() %>/ApproveUserServlet?id=<%=rs.getInt("id")%>">Approve</a>
         <% } else { %>
             <b>Done</b>
         <% } %>
@@ -81,6 +65,8 @@ try {
 </table>
 
 <br>
-<a href="adminDashboard.jsp">⬅ Back to Dashboard</a>
+<a href="<%= request.getContextPath() %>/jsp/admin/adminDashboard.jsp">⬅ Back to Dashboard</a>
 
 </div>
+
+<%@ include file="../includes/footer.jsp" %>

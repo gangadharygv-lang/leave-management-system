@@ -3,10 +3,9 @@ package com.project.servlet;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.sql.*;
 
 import com.project.util.DBConnection;
-
-import java.sql.*;
 
 public class ApproveUserServlet extends HttpServlet {
 
@@ -25,7 +24,8 @@ public class ApproveUserServlet extends HttpServlet {
             ps.setInt(1, id);
             ps.executeUpdate();
 
-            res.sendRedirect("manageUsers.jsp");
+            // ✅ FIXED REDIRECT
+            res.sendRedirect(req.getContextPath() + "/jsp/admin/manageUsers.jsp");
 
         } catch(Exception e) {
             e.printStackTrace();

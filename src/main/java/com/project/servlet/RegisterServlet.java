@@ -27,7 +27,8 @@ public class RegisterServlet extends HttpServlet {
 
             ps.executeUpdate();
 
-            res.getWriter().println("Registered! Wait for admin approval.");
+            // ✅ FIXED REDIRECT
+            res.sendRedirect(req.getContextPath() + "/jsp/security/register.jsp?msg=1");
 
         } catch(Exception e) {
             e.printStackTrace();

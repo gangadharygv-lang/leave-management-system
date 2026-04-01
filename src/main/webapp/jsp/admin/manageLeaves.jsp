@@ -1,26 +1,9 @@
-<%
-response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-response.setDateHeader("Expires", 0); // Proxies
-%>
+<%@ include file="../includes/adminAuth.jsp" %>
+<%@ include file="../includes/header.jsp" %>
 
-<%
-/* 🔐 Session check */
-if(session.getAttribute("user") == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-
-/* 🔐 Role check (admin only) */
-String role = (String) session.getAttribute("role");
-
-if(role == null || !role.equals("admin")) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-%>
 <%@ page import="java.sql.*,com.project.util.DBConnection" %>
-<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
 
 <div class="container">
 
@@ -50,21 +33,17 @@ try {
         String status = rs.getString("status");
 %>
 <tr>
-    <!-- Leave ID -->
     <td><%= rs.getInt("id") %></td>
 
-    <!-- Username + ID -->
     <td>
-        <%= rs.getString("name") %> 
+        <%= rs.getString("name") %>
         (ID: <%= rs.getInt("user_id") %>)
     </td>
 
-    <!-- Leave Details -->
     <td><%= rs.getString("leave_type") %></td>
     <td><%= rs.getString("from_date") %></td>
     <td><%= rs.getString("to_date") %></td>
 
-    <!-- 🎨 Colored Status -->
     <td>
     <%
     if("Approved".equals(status)) {
@@ -83,11 +62,10 @@ try {
     %>
     </td>
 
-    <!-- Actions -->
     <td>
         <% if("Pending".equals(status)) { %>
-            <a href="ApproveServlet?id=<%=rs.getInt("id")%>&action=approve">Approve</a> |
-            <a href="ApproveServlet?id=<%=rs.getInt("id")%>&action=reject">Reject</a>
+            <a href="<%= request.getContextPath() %>/ApproveServlet?id=<%=rs.getInt("id")%>&action=approve">Approve</a> |
+            <a href="<%= request.getContextPath() %>/ApproveServlet?id=<%=rs.getInt("id")%>&action=reject">Reject</a>
         <% } else { %>
             <b>Action Done</b>
         <% } %>
@@ -95,6 +73,7 @@ try {
 </tr>
 <%
     }
+
 } catch(Exception e) {
     e.printStackTrace();
 }
@@ -103,6 +82,8 @@ try {
 </table>
 
 <br>
-<a href="adminDashboard.jsp">⬅ Back to Dashboard</a>
+<a href="<%= request.getContextPath() %>/jsp/admin/adminDashboard.jsp">⬅ Back to Dashboard</a>
 
 </div>
+
+<%@ include file="../includes/footer.jsp" %>

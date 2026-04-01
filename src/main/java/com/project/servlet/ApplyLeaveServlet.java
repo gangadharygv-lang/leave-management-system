@@ -7,22 +7,27 @@ import java.sql.*;
 
 import com.project.util.DBConnection;
 
-
 public class ApplyLeaveServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
     throws ServletException, IOException {
 
         try {
+            HttpSession session = req.getSession(false);
+
+            // 🔐 Session check
+            if(session == null || session.getAttribute("userId") == null) {
+                res.sendRedirect(req.getContextPath() + "/jsp/security/login.jsp");
+                return;
+            }
+
+            int userId = (int) session.getAttribute("userId");
+
             Connection con = DBConnection.getConnection();
 
             PreparedStatement ps = con.prepareStatement(
                 "INSERT INTO leaves(user_id, leave_type, from_date, to_date, reason, status) VALUES (?,?,?,?,?,?)"
             );
-
-            HttpSession session = req.getSession();
-            String userName = (String) session.getAttribute("user");
-            int userId = (int) session.getAttribute("userId"); 
 
             ps.setInt(1, userId);
             ps.setString(2, req.getParameter("type"));
@@ -33,7 +38,8 @@ public class ApplyLeaveServlet extends HttpServlet {
 
             ps.executeUpdate();
 
-            res.sendRedirect("dashboard.jsp");
+            // ✅ FIXED REDIRECT
+            res.sendRedirect(req.getContextPath() + "/jsp/user/dashboard.jsp");
 
         } catch(Exception e) {
             e.printStackTrace();

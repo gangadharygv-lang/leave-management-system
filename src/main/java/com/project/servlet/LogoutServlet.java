@@ -4,9 +4,6 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.project.util.DBConnection;
-
-import java.sql.*;
 public class LogoutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -15,6 +12,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.invalidate();
 
-        res.sendRedirect("login.jsp");
+        // ✅ Correct absolute redirect
+        res.sendRedirect(req.getContextPath() + "/jsp/security/login.jsp");
     }
 }
